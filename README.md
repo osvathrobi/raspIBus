@@ -6,8 +6,9 @@ raspIBus
 RaspberryPi media player for the iBUS - for BMW X3 / E83 / 2010 
 
 RaspberryPi 	->		FT232RL (USB to SERIAL adapter) 	->		iBus simple interface				
-				-> 		AUX (sound)
-				
+
+RaspberryPi 	-> 		AUX (sound)
+
 
 Resources and External links
 ----------------------------
