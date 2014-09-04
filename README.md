@@ -10,6 +10,18 @@ RaspberryPi 	->		FT232RL (USB to SERIAL adapter) 	->		iBus simple interface
 RaspberryPi 	-> 		AUX (sound)
 
 
+TODO
+----
+
+[*] Debug interface - Read and Write messages to IBUS - raspibusDebug.py
+
+[ ] CD Changer Emulator - Output information to the BoardMonitor through IBUS
+
+[ ] Map input from steering wheel and car controls to events
+
+[ ] Setup media player interface with input and output modules
+
+
 Resources and External links
 ----------------------------
 
