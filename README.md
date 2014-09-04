@@ -13,9 +13,9 @@ RaspberryPi 	-> 		AUX (sound)
 TODO
 ----
 
-[*] Debug interface - Read and Write messages to IBUS - raspibusDebug.py
+[*] Debug interface - Read and Write messages from connected car through IBUS - raspibusDebug.py
 
-[ ] CD Changer Emulator - Output information to the BoardMonitor through IBUS
+[ ] CD Changer Emulator - Output custom information to the BoardMonitor through IBUS identified as the CD Changer
 
 [ ] Map input from steering wheel and car controls to events
 
