@@ -24,3 +24,8 @@ http://www.alextronic.de/bmw/projects_bmw_info_ibus.html
 https://github.com/ezeakeal/pyBus
 
 http://e46canbus.blogspot.ro/2014/03/ikbus-interface-options-for-arduino.html
+
+http://www.reslers.de/IBUS/index.html
+
+https://github.com/karis79/bmw-ibus/blob/master/bmw-ibus.c
+
