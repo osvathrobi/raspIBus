@@ -83,3 +83,19 @@ BMB BUTTONS 1 -> 6
 {'dat': ['48', '03'], 'src': 'F0', 'dst': '68', 'xor': 'D7', 'len': '04'}
 {'dat': ['48', '83'], 'src': 'F0', 'dst': '68', 'xor': '57', 'len': '04'}
 
+
+Instalation on my rig
+---------------------
+
+- A custom made adapter to work with the usb adapter.
+
+![alt text](http://i58.tinypic.com/5efx3n.jpg)
+
+- iBUS tapped into NAV blue connector (with PIN jumper cables)
+
+![alt text](http://i62.tinypic.com/10sdhdx.jpg)
+
+- Final instalation is an open USB Connector
+
+![alt text](http://i58.tinypic.com/358qmgi.jpg)
+
