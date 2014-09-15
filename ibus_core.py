@@ -25,12 +25,12 @@ def initialize():
       time.sleep(2)
   IBUS.waitClearBus() # Wait for the iBus to clear, then send some initialization signals
   
-  eventDriver.init(IBUS)
+  #eventDriver.init(IBUS)
   
 def shutdown():
   global IBUS
   logging.info("Shutting down event driver")
-  eventDriver.shutDown()
+  #eventDriver.shutDown()
   
   if IBUS:
     logging.info("Killing iBUS instance")
@@ -38,4 +38,5 @@ def shutdown():
     IBUS = None
 
 def run():
-  eventDriver.listen()
+  print ""
+  #eventDriver.listen()

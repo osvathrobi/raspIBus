@@ -80,7 +80,7 @@ try:
 except:
   logging.error("Caught unexpected exception:")
   logging.error(traceback.format_exc())
-  logging.info("Restarting in 3 seconds..")
+  logging.info("Restarting in 3 seconds.. Press CTRL+C to permanantly shut down!")
   time.sleep(3)  
   restart()
     
