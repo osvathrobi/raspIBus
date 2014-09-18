@@ -61,9 +61,11 @@ def quit():
     CLIENT.disconnect()
 
 def play():
+  init()
   CLIENT.play()
 
 def stop():
+  init()
   if CLIENT:
     CLIENT.stop()
 

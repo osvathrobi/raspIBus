@@ -17,6 +17,12 @@ DIRECTIVES = {
         '3B21': 'd_cdNext',
         '3B28': 'd_cdPrev'
     }
+  },
+  'F0'  : {
+    '68'  :{
+      '4811': 'd_play'
+      '4801': 'd_stop'      
+    }
   }
 }
 
@@ -32,6 +38,13 @@ def d_cdPrev(packet):
   logging.info("Playing previous song..")
   mpc.previous()
   
+def d_play(packet):
+  logging.info("Playing..")
+  mpc.play()
+
+def d_play(packet):
+  logging.info("Stopping..")
+  mpc.stop()
 
 
 # -------- Low level Interraction with the IBUS Interfcace
