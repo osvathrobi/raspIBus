@@ -11,9 +11,10 @@ import gzip
 import ibus_core as core
 
 def signal_handler_quit(signal, frame):
-  logging.info("Shutting down raspIBUS")
-  core.shutdown()
-  sys.exit(0)
+  logging.info("Shutting down raspIBUS")  
+  core.shutdown()  
+  #sys.exit(0)
+  os._exit(1)
 
 # --- Configure Logging for pySel
 
@@ -26,7 +27,7 @@ def configureLogging(numeric_level):
                       filemode='a')
   # define a Handler which writes INFO messages or higher to the sys.stderr
   console = logging.StreamHandler()
-  console.setLevel(logging.INFO)
+  console.setLevel(logging.DEBUG)
   # set a format which is simpler for console use
   formatter = logging.Formatter('%(asctime)s %(name)-12s %(levelname)-8s %(message)s')
   # tell the handler to use this format

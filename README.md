@@ -13,13 +13,13 @@ RaspberryPi 	-> 		AUX (sound)
 TODO
 ----
 
-[*] Debug interface - Read and Write messages from connected car through IBUS - raspibusDebug.py
+[OK] Debug interface - Read and Write messages from connected car through IBUS - raspibusDebug.py
 
 [ ] CD Changer Emulator - Output custom information to the BoardMonitor through IBUS identified as the CD Changer
 
-[ ] Map input from steering wheel and car controls to events
+[OK] Map input from steering wheel and car controls to events
 
-[ ] Setup media player interface with input and output modules
+[OK] Setup media player interface with input and output modules
 
 
 Resources and External links
@@ -40,6 +40,13 @@ http://e46canbus.blogspot.ro/2014/03/ikbus-interface-options-for-arduino.html
 http://www.reslers.de/IBUS/index.html
 
 https://github.com/karis79/bmw-ibus/blob/master/bmw-ibus.c
+
+
+Thank you pyBus
+---------------
+
+https://github.com/ezeakeal/pyBus
+
 
 
 Some IBUS Codes on the X3 (e83/2010)

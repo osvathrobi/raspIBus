@@ -1,5 +1,7 @@
 import serial, time, logging
 
+DEBUG = True
+
 # LOCATIONS, a mapping of hex codes seen in SRC/DST parts of packets. This WILL change across models/years.
 LOCATIONS = {
   '00' : 'Broadcast',
@@ -28,8 +30,11 @@ LOCATIONS = {
 # CLASS for iBus communications
 #------------------------------------
 class ibusFace ( ):
+
   # Initialize the serial connection - then use some commands I saw somewhere once
   def __init__(self, devPath,):
+    global DEBUG
+  
     self.SDEV = serial.Serial(
       devPath,
       baudrate=9600,
@@ -37,7 +42,11 @@ class ibusFace ( ):
       parity=serial.PARITY_EVEN,
       stopbits=serial.STOPBITS_ONE
     )
-    self.SDEV.setDTR(True)
+    # Robi hack
+    if(DEBUG):
+      logging.debug("DEBUG mode active, not setting DTR")  
+    else:
+      self.SDEV.setDTR(True)
     self.SDEV.flushInput()
     self.SDEV.lastWrite = int(round(time.time() * 1000))
     self.PACKET_STACK = []
@@ -55,10 +64,10 @@ class ibusFace ( ):
       oldTime = newTime
       if deltaTime > 0.1:
         break # we have found a significant delay in signals, but have swallowed the first character in doing so.
-              # So the next code swallows what should be the rest of the packet
-
+    
+    # So the next code swallows what should be the rest of the packet
     packetLength = self.readChar() # len packet
-    self.readChar() # dst packet
+    self.readChar() # dst packet    
     dataLen = int(packetLength, 16) - 2 # Determind length of this packet from the packetLength variable, then swallow that
     while dataLen > 0:
       self.readChar()
@@ -80,7 +89,6 @@ class ibusFace ( ):
 
     dataLen = int(packet['len'], 16) - 2
     if dataLen > 20:
-      print packet
       logging.critical("Length of +20 found, no useful packet is this long.. cleaning up")
       self.waitClearBus()
       return None
