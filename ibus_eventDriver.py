@@ -42,7 +42,7 @@ def d_play(packet):
   logging.info("Playing..")
   mpc.play()
 
-def d_play(packet):
+def d_stop(packet):
   logging.info("Stopping..")
   mpc.stop()
 
