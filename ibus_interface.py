@@ -1,6 +1,6 @@
 import serial, time, logging
 
-DEBUG = False
+DEBUG = True
 
 # LOCATIONS, a mapping of hex codes seen in SRC/DST parts of packets. This WILL change across models/years.
 LOCATIONS = {
