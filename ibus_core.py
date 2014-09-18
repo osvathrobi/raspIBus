@@ -23,7 +23,7 @@ def initialize():
     else:
       logging.warning("USB interface not found at (%s). Waiting 1 seconds.", DEVPATH)
       time.sleep(2)
-  #IBUS.waitClearBus() # Wait for the iBus to clear, then send some initialization signals
+  IBUS.waitClearBus() # Wait for the iBus to clear, then send some initialization signals
   
   logging.info("Initializing eventDriver")
   eventDriver.init(IBUS)

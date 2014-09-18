@@ -1,6 +1,5 @@
-#!/usr/bin/python
+# --- Media Player Daemon - Client
 
-# The MPD module has practically no documentation as far as I know.. so a lot of this is guess-work, albeit educated guess-work
 import pprint, os, sys, time, signal, logging
 from mpd import (MPDClient, CommandError)
 from socket import error as SocketError
@@ -72,9 +71,11 @@ def pause():
   CLIENT.pause()
 
 def next():
+  init()
   CLIENT.next()
 
 def previous():
+  init()
   CLIENT.previous()
 
 def repeat(repeat, toggle=False):

@@ -1,5 +1,10 @@
-sudo echo -n -e "\x44\x05\xBF\x74\x05\x01\x8E " > /dev/ttys004
 
-sudo echo -n -e "\x50\x04\xC8\xA6\x3B\x01" > /dev/ttys004
+socat -d -d PTY PTY
 
-{'dat': ['3B', '01'], 'src': '50', 'dst': 'C8', 'xor': 'A6', 'len': '04'}
+- next
+echo -e -n "\x50\x04\xC8\x3B\x21\xA6" > /dev/ttys005
+
+
+- prev
+echo -e -n "\x50\x04\xC8\x3B\x28\xA6" > /dev/ttys005
+

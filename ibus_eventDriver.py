@@ -8,51 +8,38 @@ TICK = 0.01 # sleep interval in seconds used between iBUS reads
 SUB_OUT = None
 AIRPLAY = False
 
+
+# --- Directives setup (SRC, DST, DATA) --- mapped to a function call
+
 DIRECTIVES = {
   '50'  : {
-    'C8' : {
-        'A63B': 'd_cdNext'
+    '68' : {
+        '3B21': 'd_cdNext',
+        '3B28': 'd_cdPrev'
     }
-  },
-  '68' : {
-      '18' : {
-        '01'     : 'd_cdPollResponse',
-        '380000' : 'd_cdSendStatus',
-        '380100' : 'd_cdStopPlaying',
-        '380300' : 'd_cdStartPlaying',
-        '380A00' : 'd_cdNext',
-        '380A01' : 'd_cdPrev',
-        '380700' : 'd_cdScanForward',
-        '380701' : 'd_cdScanBackard',
-        '380601' : 'd_toggleSS', # 1 pressed
-        '380602' : 'd_togglePause', # 2 pressed
-        '380603' : 'd_subWDown', # 3 pressed
-        '380604' : 'd_subWUp', # 4 pressed
-        '380605' : 'd_update', # 5 pressed
-        '380606' : 'd_RESET', # 6 pressed
-        '380400' : 'd_cdScanBackward',
-        '380401' : 'd_cdScanForward',
-        '380800' : 'd_cdRandom',
-        '380801' : 'd_cdRandom'
-      }
   }
 }
 
-#####################################
-# FUNCTIONS
-#####################################
-# Set the WRITER object (the iBus interface class) to an instance passed in from the CORE module
+
+# -------- Exposed functions for the intercepted events
+
+
+def d_cdNext(packet):
+  logging.info("Playing next song..")
+  mpc.next()
+
+def d_cdPrev(packet):
+  logging.info("Playing previous song..")
+  mpc.previous()
+  
+
+
+# -------- Low level Interraction with the IBUS Interfcace
 def init(writer):
-  global WRITER, SESSION_DATA, SUB_OUT
+  global WRITER, SESSION_DATA
   WRITER = writer
 
-  #pB_display.init(WRITER)
-  
   mpc.init()
-
-  #pB_ticker.init(WRITER)
-  
-  #pB_ticker.enableFunc("announce", 10)
 
 
 def manage(packet):
@@ -60,8 +47,6 @@ def manage(packet):
   dst = packet['dst']
   dataString = ''.join(packet['dat'])
   methodName = None
-  
-  #if(not (src in ['A4', '7F', 'E8', 'C8', 'D0', '3B'])):
   
   try:
     dstDir = DIRECTIVES[src][dst]
@@ -93,22 +78,14 @@ def listen():
   while True:
     packet = WRITER.readBusPacket()
     if packet:
+      logging.debug('Read packet data: %s', packet)
       manage(packet)
     time.sleep(TICK) # sleep a bit
 
 def shutDown():
-
   logging.debug("Quitting Audio Client")
   mpc.quit()
 
-  #logging.debug("Stopping Display Driver")
-  #pB_display.end()
-  #logging.debug("Killing tick utility")
-  #pB_ticker.shutDown()
-
-def d_cdNext(packet):
-  logging.info("Playing next song..")
-  mpc.next()
 
 class TriggerRestart(Exception):
   pass
