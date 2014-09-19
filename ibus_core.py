@@ -10,7 +10,7 @@ import ibus_eventDriver as eventDriver
 DEVPATH           = ""
 IBUS              = None
 REGISTERED        = False
-
+DEBUG             = False
 
 def initialize():
   global IBUS, REGISTERED, DEVPATH
@@ -19,7 +19,7 @@ def initialize():
   # Initialize the iBus interface or wait for it to become available.
   while IBUS == None:
     if os.path.exists(DEVPATH):
-      IBUS = ibusFace(DEVPATH)
+      IBUS = ibusFace(DEVPATH, DEBUG)
     else:
       logging.warning("USB interface not found at (%s). Waiting 1 seconds.", DEVPATH)
       time.sleep(2)

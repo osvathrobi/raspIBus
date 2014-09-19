@@ -1,7 +1,5 @@
 import serial, time, logging
 
-DEBUG = False
-
 # LOCATIONS, a mapping of hex codes seen in SRC/DST parts of packets. This WILL change across models/years.
 LOCATIONS = {
   '00' : 'Broadcast',
@@ -32,8 +30,7 @@ LOCATIONS = {
 class ibusFace ( ):
 
   # Initialize the serial connection - then use some commands I saw somewhere once
-  def __init__(self, devPath,):
-    global DEBUG
+  def __init__(self, devPath, DEBUG):
   
     self.SDEV = serial.Serial(
       devPath,

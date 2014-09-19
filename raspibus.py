@@ -10,6 +10,8 @@ import argparse
 import gzip
 import ibus_core as core
 
+DEBUG = False
+
 def signal_handler_quit(signal, frame):
   logging.info("Shutting down raspIBUS")  
   core.shutdown()  
@@ -27,7 +29,7 @@ def configureLogging(numeric_level):
                       filemode='a')
   # define a Handler which writes INFO messages or higher to the sys.stderr
   console = logging.StreamHandler()
-  console.setLevel(logging.INFO)
+  console.setLevel(logging.DEBUG)
   # set a format which is simpler for console use
   formatter = logging.Formatter('%(asctime)s %(name)-12s %(levelname)-8s %(message)s')
   # tell the handler to use this format
@@ -41,6 +43,7 @@ def configureLogging(numeric_level):
 def createParser():
   parser = argparse.ArgumentParser()
   parser.add_argument('-v', '--verbose', action='count', default=0, help='Increases verbosity of logging.')
+  parser.add_argument('-n', '--no-hw-dtr', action='count', default=0, help='No hardware DTR.')
   parser.add_argument('--device', action='store', help='Device path for the USB-SERIAL device connected to the IBUS')
   return parser
 
@@ -74,8 +77,14 @@ else:
   devPath = "/dev/tty.usbserial-A601HPGR"
   logging.warning('Device argument missing. Using default: %s', devPath)
 
+if results.no_hw_dtr:
+  DEBUG = True
+
+print DEBUG
+
 try:
   core.DEVPATH = devPath
+  core.DEBUG = DEBUG
   core.initialize();
   core.run();
 except:
