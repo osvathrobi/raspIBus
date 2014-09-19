@@ -34,7 +34,7 @@ def init():
   CLIENT = MPDClient()
   if mpdConnect(CLIENT, CON_ID):
     logging.info('Connected to MPD server')
-    #CLIENT.setvol(100)
+    CLIENT.setvol(100)
     PLAYLIST = CLIENT.playlistinfo()
     LIBRARY  = CLIENT.listallinfo()
     
@@ -61,11 +61,9 @@ def quit():
     CLIENT.disconnect()
 
 def play():
-  init()
   CLIENT.play()
 
 def stop():
-  init()
   if CLIENT:
     CLIENT.stop()
 
@@ -73,11 +71,9 @@ def pause():
   CLIENT.pause()
 
 def next():
-  init()
   CLIENT.next()
 
 def previous():
-  init()
   CLIENT.previous()
 
 def repeat(repeat, toggle=False):
