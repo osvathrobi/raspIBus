@@ -28,10 +28,13 @@ LOCATIONS = {
 # CLASS for iBus communications
 #------------------------------------
 class ibusFace ( ):
-
+  
   # Initialize the serial connection - then use some commands I saw somewhere once
   def __init__(self, devPath, DEBUG):
+    global LOCATIONS
   
+    self.LOCATIONS = LOCATIONS
+
     self.SDEV = serial.Serial(
       devPath,
       baudrate=9600,

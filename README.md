@@ -21,6 +21,11 @@ TODO
 
 [OK] Setup media player interface with input and output modules
 
+[ ] Detect 6 minutes of idle time and initiate shutdown procedures
+
+[ ] Make a power supply circuit
+
+
 
 Resources and External links
 ----------------------------
