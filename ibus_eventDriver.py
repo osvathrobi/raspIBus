@@ -1,7 +1,8 @@
 import os, sys, time, signal, json, logging, traceback
 
 import mpd_client as mpc
-import dev_bordmonitor as BordMonitor
+import device_bordmonitor as BordMonitor
+import device_cdc as CDC
 
 WRITER = None
 SESSION_DATA = {}
@@ -23,6 +24,11 @@ DIRECTIVES = {
     '68'  :{
       '4811': 'd_play',
       '4801': 'd_stop'      
+    }
+  },
+  '68' : {
+    '18' : {
+      '01' : 'd_cdPollResponse'
     }
   }
 }
@@ -54,6 +60,12 @@ def d_stop(packet):
   logging.info("Stopping..")
   mpc.stop()
 
+def d_cdPollResponse(packet):
+  # stop announcing, change to poll response every 30 seconds
+  CDC.disableFunc("announce") 
+  CDC.disableFunc("pollResponse")
+  CDC.enableFunc("pollResponse", 30)
+
 
 # -------- Low level Interraction with the IBUS Interfcace
 def init(writer):
@@ -62,6 +74,8 @@ def init(writer):
 
   mpc.init()
   BordMonitor.init(WRITER)
+  CDC.init(WRITER)
+  CDC.enableFunc("announce", 10)
 
 def manage(packet):
   src = packet['src']
