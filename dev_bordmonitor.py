@@ -5,7 +5,7 @@ WRITER = ""
 
 def ibusSendRefresh():
   global WRITER
-  WRITER.writeBusPacket('68', '3B', ['A5', '60', '01', '00', '91'])
+  WRITER.writeBusPacket('68', '3B', ['A5', '60', '01', '00'])
 
 def ibusSendText(dataPacket):
   global WRITER
