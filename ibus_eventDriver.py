@@ -1,6 +1,7 @@
 import os, sys, time, signal, json, logging, traceback
 
 import mpd_client as mpc
+import dev_bordmonitor as BordMonitor
 
 WRITER = None
 SESSION_DATA = {}
@@ -34,21 +35,12 @@ def d_cdNext(packet):
   logging.info("Playing next song..")
   mpc.next()
   v = mpc.getInfo()
-  print v['track']
-
-  #WRITER.writeBusPacket('68', '3B', _hexText(4, ""))  
-  #WRITER.waitClearBus()
-  WRITER.writeBusPacket('68', '3B', _hexText(0, v['track']['artist']))
-  #WRITER.waitClearBus()
-  #WRITER.writeBusPacket('68', '3B', _hexText(1, '1' + v['track']['title']))  
-  #WRITER.waitClearBus()
   
-  #WRITER.waitClearBus()
-  #WRITER.writeBusPacket('68', '3B', _hexText(2, '2' + v['track']['title']))  
 
-  #WRITER.waitClearBus()
-  # refresh
-  #WRITER.writeBusPacket('68', '3B', _hexText(3, ""))
+  BordMonitor.sendText(0, v['track']['artist'])
+  BordMonitor.sendText(1, v['track']['time'])
+  BordMonitor.sendText(7, v['track']['title'])
+  
 
 def d_cdPrev(packet):
   logging.info("Playing previous song..")
@@ -61,44 +53,7 @@ def d_play(packet):
 def d_stop(packet):
   logging.info("Stopping..")
   mpc.stop()
-  #WRITER.write("68 0B 3B A5 62 01 42 20 50 20 35 20 99");  
 
-
-def _hexText(dst, string):
-  #string = string[0:3]
-  print string
-  #dataPacket = ['23', '42', '01']
-
-  # TITLE DISPLAY
-  if dst == 0:
-    dataPacket = ['23', '42', '01']  
-
-  # READ: ['68', '08', '3B', ['A5', '62', '01', '44', '54', '50'], 'DD']
-  if dst == 1:
-    string = string[0:2]
-    dataPacket = ['A5', '62', '01', '41']  
-
-  if dst == 2:
-    string = ""
-    dataPacket = ['21', '60', '01', '01']
-
-  if dst == 3:
-    dataPacket = ['21', '60', '00']  
-
-  if dst == 4:
-    dataPacket = ['46', '0C']  
-
-  stringLen = 0
-  logging.debug("Got string for hexing: %s", string)
-  while (stringLen < 10000) and (len(string) > 0):
-    c = string[stringLen] # stringLen doubles up as the index to use when retrieving characters of the string to be displayed.. apologies for how misleading this may be
-    dataPacket.append('%02X' % (ord(c)))
-    stringLen = stringLen + 1
-    if (stringLen == len(string)):
-      break
-
-  print dataPacket
-  return dataPacket
 
 # -------- Low level Interraction with the IBUS Interfcace
 def init(writer):
@@ -106,7 +61,7 @@ def init(writer):
   WRITER = writer
 
   mpc.init()
-
+  BordMonitor.init(WRITER)
 
 def manage(packet):
   src = packet['src']

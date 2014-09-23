@@ -24,15 +24,21 @@ LOCATIONS = {
   'F0' : 'BMB Board Monitor Buttons',
   'FF' : 'Broadcast'
 }
+
+DEBUG = False
+
 #------------------------------------
 # CLASS for iBus communications
 #------------------------------------
 class ibusFace ( ):
   
   # Initialize the serial connection - then use some commands I saw somewhere once
-  def __init__(self, devPath, DEBUG):
+  def __init__(self, devPath, fDEBUG):
     global LOCATIONS
-  
+    global DEBUG
+
+    DEBUG = fDEBUG
+
     self.LOCATIONS = LOCATIONS
 
     self.SDEV = serial.Serial(
@@ -131,6 +137,8 @@ class ibusFace ( ):
   # The packet is then sent if the CTS signal is good (Clear To Send)
   # TODO: Read to verify the packet we send is seen
   def writeBusPacket(self, src, dst, data):
+    global DEBUG
+
     time.sleep(0.01) # pause a tick
     length = '%02X' % (2 + len(data))
     packet = [src, length, dst]
@@ -146,10 +154,17 @@ class ibusFace ( ):
 
     packetSent = False
     while (not packetSent):
-      logging.debug("WRITE: %s" % packet)
+      logging.debug("WRITE: %s" % ', '.join(str(hex(p).replace('0x','').upper()) for p in packet))
+
+      if DEBUG:
+        logging.debug('WRITE returned without writing (DEBUG is ON)')
+        return
+        
+
       if (self.SDEV.getCTS()) and ((int(round(time.time() * 1000)) - self.SDEV.lastWrite) > 10): # dont write packets to close together.. issues arise
+        logging.debug("WRITE: WRITE START")
         self.writeFullPacket(packet)
-        logging.debug("WRITE: SUCCESS")
+        logging.debug("WRITE: WRITE END - SUCCESS")
         self.SDEV.lastWrite = int(round(time.time() * 1000))
         packetSent = True
       else:
