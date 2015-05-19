@@ -25,6 +25,10 @@ TODO
 
 [ ] Make a power supply circuit
 
+IDEA
+----
+
+Should create a virtual bluetooth remote controller and map IBUS to those buttons. Then you could pair with smartphone and play music through the car's AUX.
 
 
 Resources and External links
